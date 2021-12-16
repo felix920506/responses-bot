@@ -1,4 +1,4 @@
 # responses-bot
 Discord bot for custom responses
 
-requires pycord
+requires discord.py or pycord
