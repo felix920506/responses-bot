@@ -1,6 +1,5 @@
 # import libraries
 
-from types import resolve_bases
 import discord
 import json
 from discord.ext import commands
@@ -9,7 +8,6 @@ from random import randint
 
 
 # define time function
-
 
 def clock():
     return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -54,7 +52,6 @@ async def on_ready():
 
 # reload command
 
-
 @bot.command(brief="reloads responses from file, bot owner only")
 async def reload(ctx):
     if ctx.author.id == int(owner):
@@ -77,7 +74,6 @@ async def reload(ctx):
 
 
 # add response command
-
 
 @bot.command(
     aliases=["acr", "addcustreact"], brief="adds a custom response, server admin only"
@@ -119,12 +115,11 @@ async def addresponse(ctx, trigger, response):
             json.dumps(responses, sort_keys=True, indent=4, ensure_ascii=False)
         )
 
-    print(clock() + f" changes have been saved")
-    await ctx.send(f"changes have been saved")
+    print(clock() + " changes have been saved")
+    await ctx.send("changes have been saved")
 
 
 # delete response command
-
 
 @bot.command(
     aliases=["dcr", "delcustreact"], brief="deletes response, server admin only"
@@ -134,9 +129,6 @@ async def deleteresponse(ctx, trigger, index=-1):
     global responses
     index = int(index)
     trigger = trigger.lower()
-    # print(responses)
-
-    old_response = "something"
 
     if index == -1:
         del responses[trigger]
@@ -167,19 +159,18 @@ async def deleteresponse(ctx, trigger, index=-1):
             json.dumps(responses, sort_keys=True, indent=4, ensure_ascii=False)
         )
 
-    print(clock() + f" Changes have been saved.")
-    await ctx.send(f"Changes have been saved.")
+    print(clock() + " Changes have been saved.")
+    await ctx.send("Changes have been saved.")
     print(
         clock()
-        + f' CAUTION! INDEXES OF OTHER MESSAGES MAY HAVE BEEN CHANGED, PLEASE CONFIRM WITH "listresponses" COMMAND OR CHECK "responses.json" FILE BEFORE PROCEEDING.'
+        + 'CAUTION! INDEXES OF OTHER MESSAGES MAY HAVE BEEN CHANGED, PLEASE CONFIRM WITH "listresponses" COMMAND OR CHECK "responses.json" FILE BEFORE PROCEEDING.'
     )
     await ctx.send(
-        f"CAUTION! INDEXES OF OTHER MESSAGES MAY HAVE BEEN CHANGED, PLEASE CONFIRM WITH `listresponses` COMMAND BEFORE PROCEEDING."
+        'CAUTION! INDEXES OF OTHER MESSAGES MAY HAVE BEEN CHANGED, PLEASE CONFIRM WITH "listresponses" COMMAND BEFORE PROCEEDING.'
     )
 
 
 # edit response command
-
 
 @bot.command(
     aliases=["ecr", "editcustreact"], brief="edits response, server admin only"
@@ -211,7 +202,6 @@ async def editresponse(ctx, trigger, index, response):
 
 # list response trigger command
 
-
 @bot.command(aliases=["lcr", "lts"], brief="list all triggers, server admin only")
 @commands.has_guild_permissions(administrator=True)
 async def listtriggers(ctx):
@@ -219,7 +209,6 @@ async def listtriggers(ctx):
 
 
 # list responses by trigger command
-
 
 @bot.command(
     aliases=["lrs"], brief="list responses of given trigger, server admin only"
@@ -231,7 +220,6 @@ async def listreponses(ctx, trigger):
 
 # main function
 
-
 @bot.event
 async def on_message(message):
     if message.content.lower() in responses.keys() and message.author.id != bot.user.id:
@@ -240,7 +228,7 @@ async def on_message(message):
             + f' "{message.content}" detected in message from {message.author} in {message.channel} on server {message.guild}'
         )
 
-        if message.author.bot == False or ignore_bot == False:
+        if (not message.author.bot) or (not ignore_bot):
             replies = responses.get(message.content.lower())
             reply = replies[randint(1, len(replies)) - 1]
 
@@ -248,7 +236,7 @@ async def on_message(message):
             print(clock() + f' replied with "{reply}"')
 
         else:
-            print(clock() + f" message was sent by a bot, ignoring message")
+            print(clock() + " message was sent by a bot, ignoring message")
 
     await bot.process_commands(message)
 
