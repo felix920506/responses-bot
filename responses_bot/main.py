@@ -214,7 +214,7 @@ async def listtriggers(ctx):
     aliases=["lrs"], brief="list responses of given trigger, server admin only"
 )
 @commands.has_guild_permissions(administrator=True)
-async def listreponses(ctx, trigger):
+async def listresponses(ctx, trigger):
     await ctx.send("\n".join(map(str, responses[trigger])))
 
 
