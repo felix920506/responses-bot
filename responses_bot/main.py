@@ -36,7 +36,10 @@ with open('responses.json',encoding="utf-8") as res_file:
 
 # bot setup
 
-bot = commands.Bot(command_prefix=prefix,description='custom responses bot by felix920506')
+intents = discord.Intents.default()
+intents.message_content = True
+
+bot = commands.Bot(command_prefix=prefix, intents=intents, description='custom responses bot by felix920506')
 
 @bot.event
 async def on_ready():
