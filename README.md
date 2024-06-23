@@ -48,13 +48,12 @@ Discord bot for custom responses
 - Bot Owner (as specified in settings.json) only
 
 ## Setup
-1. Provide your bot token and owner ID in the settings.json file
-2. Build your own settings.json file and save in the same dir
+1. Build your own settings.json file and save in the same dir
 	- token: str - Your Discord Bot Token
 	- owner: int - The User ID of the Owner
 	- prefix: str - Prefix for the Commands above
 	- ignore_bot: boolean - If Bot messages should be ignored or not
-3. run the main.py file using python
+2. run the main.py file using python
 
 ## Functionality
 randomly select a message from the respective list and replies with the message when the trigger word is sent in a channel the bot is in
